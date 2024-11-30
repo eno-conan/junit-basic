@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 /**
  * Serviceのテストクラス。
  */
-// mvn clean jacoco:prepare-agent test jacoco:report
 @SpringBootTest
 class ApiServiceTest {
 
