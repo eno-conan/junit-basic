@@ -1,5 +1,6 @@
 package com.junitbasic.demo.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.NoArgsConstructor;
@@ -11,6 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ApiService {
 
+    @Autowired
+    private ApiServiceSub apiServiceSub;
+
     /**
     * sampleメソッド。
     *
@@ -18,6 +22,17 @@ public class ApiService {
     */
     public String sample() {
         return "1";
+    }
+
+    /**
+    * sampleWithSubメソッド。
+    *
+    * @return 1
+    */
+    public int sampleWithSub(int number1,int number2) {
+        int result = apiServiceSub.plusTwoNumbers(number1, number2);
+        int result2 = apiServiceSub.minusParameterNumber(result, 1);
+        return result2;
     }
 
     /**
@@ -32,6 +47,19 @@ public class ApiService {
             return "正の数";
         }
         return "0";
+    }
+
+    /**
+     * 引数を受け取ってその値に対して処理を行う。
+     * @param firstNumber 判定対象の数字
+     * @param secondNumber 判定対象の数字
+     * @return 判定結果
+     */
+    public String sample3(int firstNumber,int secondNumber) {
+        if (firstNumber == 0 && secondNumber == 0) {
+            return "0";
+        } 
+        return "それ以外";
     }
 
 }
