@@ -2,11 +2,11 @@ package com.junitbasic.demo.businesslogic;
 
 import java.util.List;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
+@NoArgsConstructor
 public class BusinessLogicOutput {
 
     /** 結果ステータス */

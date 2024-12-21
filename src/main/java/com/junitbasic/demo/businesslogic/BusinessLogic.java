@@ -15,7 +15,7 @@ public class BusinessLogic {
     *
     * @return 1
     */
-    public String logic1(BusinessLogicInput input) {
+    public BusinessLogicOutput logic1(BusinessLogicInput input) {
 
         // 相関チェック実施
         if (input.getContractNumber() != null && input.getContractNumberBranch() != null) {
@@ -24,7 +24,14 @@ public class BusinessLogic {
             }
         }
 
-        return "1";
+        BusinessLogicOutput output = new BusinessLogicOutput();
+        if(input.getContractUpdatePlanDate() != null && input.getContractUpdateReason() == null){
+            output.setErrorMessage("契約更新日付を入力した場合は、契約更新理由を入力してください。");
+            output.setResultStatus("NG");
+            return output;
+        }
+
+        return output;
     }
 
     public String generics() {
