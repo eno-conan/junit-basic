@@ -1,5 +1,9 @@
 package com.junitbasic.demo.service;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -27,6 +31,17 @@ public class ApiServiceSub {
     public int minusParameterNumber(int targetNumber, int minusNumber) {
         int calcResult = targetNumber - minusNumber;
         return calcResult;
+    }
+
+    public InputStream readCsv(){
+         // CSVデータを文字列で定義（エスケープ済み）
+        String csvData = "\"123\",\"ABC\",\"令和080830\",\"あいうえお\"";
+
+        // 文字列をバイト配列に変換
+        byte[] byteArray = csvData.getBytes(StandardCharsets.UTF_8);
+                // ByteArrayInputStreamを使用してInputStreamを作成
+        InputStream inputStream = new ByteArrayInputStream(byteArray);
+        return  inputStream;
     }
 
 }

@@ -4,12 +4,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 // import org.springframework.boot.test.mock.mockito.MockBean;
 // import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
+// import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 
 /**
  * Serviceのテストクラス。
@@ -21,11 +27,27 @@ class ApiServiceTest {
     private ApiService apiService;
 
     // @MockBean
-    // @MockitoBean
+    @MockitoBean
+    private ApiServiceSub apiServiceSub;
+
+    // @MockitoSpyBean
     // private ApiServiceSub apiServiceSub;
 
-    @MockitoSpyBean
-    private ApiServiceSub apiServiceSub;
+    @Test
+    void successCsv() {
+        // CSVデータを文字列で定義（エスケープ済み）
+        String csvData = "\"123\",\"ABC\",\"令和080830\",\"あいうえお\"";
+        // 文字列をバイト配列に変換
+        byte[] byteArray = csvData.getBytes();
+        // byte[] byteArray = csvData.getBytes(StandardCharsets.UTF_8);
+        // ByteArrayInputStreamを使用してInputStreamを作成
+        InputStream inputStream = new ByteArrayInputStream(byteArray);
+        when(apiServiceSub.readCsv()).thenReturn(inputStream);
+        List<String> csvFields = apiService.csv();
+        if (csvFields != null) {
+            assertEquals("令和080830", csvFields.get(2));
+        }
+    }
 
     @Test
     void successSample() {
@@ -41,14 +63,14 @@ class ApiServiceTest {
         assertEquals(2, actual);
     }
 
-    @Test
-    void successSampleWithSubUsingSpy() {
-        // ApiServiceから呼び出すSubクラスの特定処理のみMock化
-        when(apiServiceSub.plusTwoNumbers(anyInt(), anyInt())).thenReturn(3);//plusTwoNumbersはMock化
-        // minusParameterNumberは実際の処理を実行
-        int actual = apiService.sampleWithSub(1, 2);
-        assertEquals(2, actual);
-    }
+    // @Test
+    // void successSampleWithSubUsingSpy() {
+    //     // ApiServiceから呼び出すSubクラスの特定処理のみMock化
+    //     when(apiServiceSub.plusTwoNumbers(anyInt(), anyInt())).thenReturn(3);//plusTwoNumbersはMock化
+    //     // minusParameterNumberは実際の処理を実行
+    //     int actual = apiService.sampleWithSub(1, 2);
+    //     assertEquals(2, actual);
+    // }
 
     @Test
     void successSample2_JudgeMinus() {
