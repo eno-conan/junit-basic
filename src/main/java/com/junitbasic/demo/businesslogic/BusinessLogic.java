@@ -12,6 +12,7 @@ import com.junitbasic.demo.generic.Storage;
 import com.junitbasic.demo.mapper.ApiMapper;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Service
 @AllArgsConstructor
@@ -27,7 +28,7 @@ public class BusinessLogic {
     public BusinessLogicOutput logic(BusinessLogicInput input) {
 
         // 相関チェック実施
-        if (input.getContractNumber() == null || input.getContractNumberBranch() == null) {
+        if (isCheckedOneOfThemIsNull(input.getContractNumber(), input.getContractNumberBranch())) {
             throw new ApplicationException("契約番号と契約番号枝番は必須です。");
         }
 
@@ -59,5 +60,16 @@ public class BusinessLogic {
         String result = personStorage.describe();
         // personStorage.clear();
         return result;
+    }
+
+    /**
+     * 相関チェック
+     * 
+     * @param contractNumber
+     * @param contractNumberBranch
+     * @return
+     */
+    private boolean isCheckedOneOfThemIsNull(String contractNumber, String contractNumberBranch) {
+        return contractNumber == null || contractNumberBranch == null;
     }
 }

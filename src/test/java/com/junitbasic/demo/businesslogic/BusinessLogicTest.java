@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -42,10 +45,70 @@ public class BusinessLogicTest {
         assertEquals(input.getContractStatus(), condition.getContractStatus());
     }
 
+    /** privateメソッド(isCheckedOneOfThemIsNull)のテスト。
+     * 
+     * 2つの引数とも値が設定されている場合。
+     * 
+     * @throws InvocationTargetException 
+     * @throws IllegalAccessException 
+     * @throws SecurityException 
+     * @throws NoSuchMethodException 
+    */
+    @Test
+    void isCheckedOneOfThemIsNullTest_BothParamterAreNotNull()
+            throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, SecurityException {
+        Method method;
+
+        method = BusinessLogic.class.getDeclaredMethod("isCheckedOneOfThemIsNull", String.class, String.class);
+        method.setAccessible(true);
+        boolean flg = (boolean) method.invoke(businessLogic, "testStr!", "testStr2");
+        assertEquals(flg, false);
+    }
+
+    /** privateメソッド(isCheckedOneOfThemIsNull)のテスト。
+     * 
+     * 1つ目の引数がnullの場合。
+     * 
+     * @throws InvocationTargetException 
+     * @throws IllegalAccessException 
+     * @throws SecurityException 
+     * @throws NoSuchMethodException 
+    */
+    @Test
+    void isCheckedOneOfThemIsNullTest_FirstParamterAreIsNull()
+            throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, SecurityException {
+        Method method;
+
+        method = BusinessLogic.class.getDeclaredMethod("isCheckedOneOfThemIsNull", String.class, String.class);
+        method.setAccessible(true);
+        boolean flg = (boolean) method.invoke(businessLogic, null, "testStr2");
+        assertEquals(flg, true);
+    }
+    
+    /** privateメソッド(isCheckedOneOfThemIsNull)のテスト。
+     * 
+     * 2つ目の引数がnullの場合。
+     * 
+     * @throws InvocationTargetException 
+     * @throws IllegalAccessException 
+     * @throws SecurityException 
+     * @throws NoSuchMethodException 
+     */
+    @Test
+    void isCheckedOneOfThemIsNullTest_SecondParamterAreIsNull()
+    throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, SecurityException {
+        Method method;
+        
+        method = BusinessLogic.class.getDeclaredMethod("isCheckedOneOfThemIsNull", String.class, String.class);
+        method.setAccessible(true);
+        boolean flg = (boolean) method.invoke(businessLogic, "testStr!", null);
+        assertEquals(flg, true);
+    }
+
     /**
      * 仮のBusinessLogicInputを作成。
      */
-    private  BusinessLogicInput createInput() {
+    private BusinessLogicInput createInput() {
         BusinessLogicInput input = new BusinessLogicInput();
         input.setContractNumber("1234567890");
         input.setContractNumberBranch("123");
