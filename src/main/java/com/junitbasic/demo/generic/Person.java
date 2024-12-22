@@ -1,4 +1,4 @@
-package com.junitbasic.demo.businesslogic;
+package com.junitbasic.demo.generic;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

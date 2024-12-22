@@ -17,24 +17,6 @@ public class BusinessLogicInput {
     /** メールアドレス */
     private String mailAddress;
 
-    /** 年齢 */
-    private int age;
-
-    /** 住所 */
-    private String address;
-
-    /** 電話番号 */
-    private String phoneNumber;
-
-    /** 会社名 */
-    private String companyName;
-
-    /** 部署名 */
-    private String departmentName;
-
-    /** 役職 */
-    private String position;
-
     /** 契約番号 */
     private String contractNumber;
 
@@ -43,7 +25,10 @@ public class BusinessLogicInput {
 
     /** 契約種別 */
     private String contractType;
-    
+
+    /** 契約状態 */
+    private String contractStatus;
+
     /** 契約開始日 */
     private String contractStartDate;
 

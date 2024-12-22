@@ -1,4 +1,4 @@
-package com.junitbasic.demo.businesslogic;
+package com.junitbasic.demo.generic;
 
 // Genericsクラス
 public class Storage<T> {
